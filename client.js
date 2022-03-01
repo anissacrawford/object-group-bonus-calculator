@@ -1,4 +1,4 @@
-const employees = [
+ const employees = [
   {
     name: 'Atticus',
     employeeNumber: '2405',
@@ -43,17 +43,55 @@ const employees = [
 
 // function to calculate bonusPercent
 function bonusPercentageFunc( employee ) {
-  if (employee.reviewRating <= 2){
-    return 0;
+  let baseBonus = 0;
+  let bonusAdjusted = 0;
+  let totalBonus;
+
+  // determine baseBonus percentage
+  if (employee.reviewRating <= 2) {
+    baseBonus = 0;
+  } 
+  if (employee.reviewRating === 3){
+    baseBonus = 0.04;
   }
-  return 2;
+  if (employee.reviewRating === 4){
+    baseBonus = 0.06;
+  }
+  if (employee.reviewRating === 5) {
+    baseBonus = 0.1;
+  }
+  
+  // determine bonusAdjusted 
+  if (employee.employeeNumber / 1000 >= 1 ){
+    bonusAdjusted = 0.05;
+  }
+
+  if (employee.annualSalary > 65000){ 
+    bonusAdjusted -= 0.01;
+  }
+
+  // calculate totalBonus from baseBonus and bonusAdjusted
+  totalBonus = baseBonus + bonusAdjusted;
+
+  // check final conditions
+  if (totalBonus > 0.13){
+    totalBonus = 0.13;
+  }
+
+  if (totalBonus < 0){
+    totalBonus = 0;
+  }
+
+  return totalBonus;
 }
+
 // function that returns employeeBonus object
 function employeeBonus( employee ) {
   let name = employee.name;
+  // call bonusPercentage function to calculate bonusPercentage
   let bonusPercentage = bonusPercentageFunc( employee );
   let totalBonus = employee.annualSalary * bonusPercentage;
-  let totalCompensation = employee.annualSalary + totalBonus;
+  let totalCompensation = Number(employee.annualSalary) + totalBonus;
 
   let employeeBonusObject = {
     name: name,
@@ -64,7 +102,6 @@ function employeeBonus( employee ) {
 
   return employeeBonusObject;
 }
-
 
 //loop through list of employees
 for (let employee of employees) {
