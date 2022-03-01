@@ -38,5 +38,38 @@ const employees = [
 
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
+//-----------------------------------------
+
+
+// function to calculate bonusPercent
+function bonusPercentageFunc( employee ) {
+  if (employee.reviewRating <= 2){
+    return 0;
+  }
+  return 2;
+}
+// function that returns employeeBonus object
+function employeeBonus( employee ) {
+  let name = employee.name;
+  let bonusPercentage = bonusPercentageFunc( employee );
+  let totalBonus = employee.annualSalary * bonusPercentage;
+  let totalCompensation = employee.annualSalary + totalBonus;
+
+  let employeeBonusObject = {
+    name: name,
+    bonusPercentage: bonusPercentage,
+    totalCompensation: totalCompensation,
+    totalBonus: totalBonus
+  }
+
+  return employeeBonusObject;
+}
+
+
+//loop through list of employees
+for (let employee of employees) {
+  // log employeeBonus objects for each employee
+  console.log(employeeBonus( employee ));
+}
 
 console.log( employees );
