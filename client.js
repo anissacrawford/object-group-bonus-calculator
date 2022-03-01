@@ -1,3 +1,5 @@
+ $(document).ready(readyNow);
+ 
  const employees = [
   {
     name: 'Atticus',
@@ -110,3 +112,19 @@ for (let employee of employees) {
 }
 
 console.log( employees );
+
+function displayBonuses( employees ) {
+  $('#output').empty();
+  for (let employee of employees){
+    employeeBonusObj = employeeBonus(employee);
+    $('#output').append(`<li>` + employee.name + ': $' + employeeBonusObj.totalCompensation + `</li>`);
+  }
+}
+
+function readyNow() {
+  $( '#addBonusesButton' ).on('click', handleClick);
+}
+
+function handleClick() {
+  displayBonuses(employees)
+}
